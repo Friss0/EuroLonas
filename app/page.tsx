@@ -29,7 +29,7 @@ export default async function Home() {
             aria-hidden
             className="absolute inset-0 bg-gradient-to-r from-espresso/35 via-espresso/10 to-transparent"
           />
-          <div className="relative z-10 px-[clamp(26px,5vw,72px)] py-[clamp(48px,7vw,96px)]">
+          <div className="relative z-10 flex flex-col items-start gap-10 px-[clamp(26px,5vw,72px)] py-[clamp(48px,7vw,96px)] md:flex-row md:items-center md:justify-between md:gap-12">
             <Reveal>
               <p className="font-mono text-xs font-semibold uppercase tracking-[0.22em] text-sand">
                 Representación oficial
@@ -43,6 +43,13 @@ export default async function Home() {
                 trazabilidad de origen.
               </p>
             </Reveal>
+
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logos/sauleda-nobg.png"
+              alt="Sauleda"
+              className="w-[clamp(150px,16vw,280px)] shrink-0 opacity-95 drop-shadow-[0_6px_24px_rgba(0,0,0,0.35)]"
+            />
           </div>
         </div>
       </section>
