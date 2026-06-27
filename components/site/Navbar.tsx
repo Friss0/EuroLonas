@@ -6,7 +6,6 @@ import { AccountMenu } from "./AccountMenu";
 import { ProductsMenu } from "./ProductsMenu";
 import { AplicacionesMenu } from "./AplicacionesMenu";
 import { MobileNav } from "./MobileNav";
-import { SITE } from "@/lib/site";
 import { getProfile } from "@/lib/auth";
 import { getProductosMenu } from "@/lib/queries";
 
@@ -44,14 +43,9 @@ export async function Navbar() {
         <nav className="ml-auto hidden items-center gap-1 md:flex">
           <ProductsMenu products={productosMenu} />
           <AplicacionesMenu />
-          <a
-            href={SITE.whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={linkClass}
-          >
+          <Link href="/contacto" className={linkClass}>
             Contacto
-          </a>
+          </Link>
           {profile ? (
             <AccountMenu isAdmin={isAdmin} />
           ) : (

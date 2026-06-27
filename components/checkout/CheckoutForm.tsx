@@ -75,6 +75,9 @@ export function CheckoutForm({
         <label className="block space-y-2">
           <span className={labelClass}>Nombre completo</span>
           <input
+            id="checkout-nombre"
+            name="nombre"
+            autoComplete="name"
             required
             value={nombre}
             onChange={(e) => setNombre(e.target.value)}
@@ -84,7 +87,10 @@ export function CheckoutForm({
         <label className="block space-y-2">
           <span className={labelClass}>Email</span>
           <input
+            id="checkout-email"
+            name="email"
             type="email"
+            autoComplete="email"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -94,6 +100,10 @@ export function CheckoutForm({
         <label className="block space-y-2">
           <span className={labelClass}>Teléfono</span>
           <input
+            id="checkout-telefono"
+            name="telefono"
+            type="tel"
+            autoComplete="tel"
             value={telefono}
             onChange={(e) => setTelefono(e.target.value)}
             className={inputClass}

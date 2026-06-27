@@ -52,6 +52,8 @@ export function LoginForm() {
       <label className="block space-y-2">
         <span className={labelClass}>Email</span>
         <input
+          id="login-email"
+          name="email"
           type="email"
           autoComplete="email"
           required
@@ -63,6 +65,8 @@ export function LoginForm() {
       <label className="block space-y-2">
         <span className={labelClass}>Contraseña</span>
         <input
+          id="login-password"
+          name="password"
           type="password"
           autoComplete="current-password"
           required

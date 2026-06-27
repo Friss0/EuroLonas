@@ -109,6 +109,7 @@ export function SearchBar({ autoFocus = false }: { autoFocus?: boolean }) {
               if (e.key === "Escape") setOpen(false);
             }}
             type="search"
+            name="q"
             autoFocus={autoFocus}
             placeholder="Buscar productos…"
             aria-label="Buscar productos"

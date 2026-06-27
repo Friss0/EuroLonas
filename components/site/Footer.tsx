@@ -121,6 +121,14 @@ export function Footer() {
 
         <Col titulo="Contacto">
           <li>
+            <Link
+              href="/contacto"
+              className="text-cream/80 transition-colors hover:text-camel-soft"
+            >
+              Formulario
+            </Link>
+          </li>
+          <li>
             <a
               href={SITE.whatsappUrl}
               target="_blank"

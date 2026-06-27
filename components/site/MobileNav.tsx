@@ -82,6 +82,7 @@ export function MobileNav({
       label: "Contacto",
       bg: "#8a5f3e",
       links: [
+        { label: "Formulario de contacto", href: "/contacto" },
         {
           label: "Escribinos por WhatsApp",
           href: SITE.whatsappUrl,

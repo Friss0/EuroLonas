@@ -57,6 +57,8 @@ export function RegisterForm() {
       <label className="block space-y-2">
         <span className={labelClass}>Nombre completo</span>
         <input
+          id="registro-nombre"
+          name="nombre"
           type="text"
           autoComplete="name"
           required
@@ -68,6 +70,8 @@ export function RegisterForm() {
       <label className="block space-y-2">
         <span className={labelClass}>Email</span>
         <input
+          id="registro-email"
+          name="email"
           type="email"
           autoComplete="email"
           required
@@ -79,6 +83,8 @@ export function RegisterForm() {
       <label className="block space-y-2">
         <span className={labelClass}>Contraseña</span>
         <input
+          id="registro-password"
+          name="password"
           type="password"
           autoComplete="new-password"
           required
