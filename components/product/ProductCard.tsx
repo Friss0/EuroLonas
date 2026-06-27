@@ -25,7 +25,15 @@ export function productoThumbnail(p: ProductoConVariantes): string | null {
  * muestrario de colores. En las páginas de aplicaciones toma el color de acento
  * vía la variable CSS --accent; en el resto cae al camel/cocoa de marca.
  */
-export function ProductCard({ producto }: { producto: ProductoConVariantes }) {
+export function ProductCard({
+  producto,
+  compact = false,
+}: {
+  producto: ProductoConVariantes;
+  /** `compact` = foto 4:3 siempre (slider). Por defecto la foto es más alta en
+   *  mobile (4:5) para que entre ~un producto por pantalla, y 4:3 en desktop. */
+  compact?: boolean;
+}) {
   const { variantes, nombre, slug, codigo, unidad_venta, precio_base } =
     producto;
   const hexes = variantes
@@ -35,13 +43,14 @@ export function ProductCard({ producto }: { producto: ProductoConVariantes }) {
   const desde = precioDesde(precio_base, variantes);
   const esColor = variantes.some((v) => v.tipo === "color");
   const thumb = productoThumbnail(producto);
+  const aspect = compact ? "aspect-[4/3]" : "aspect-[4/5] sm:aspect-[4/3]";
 
   return (
     <Link
       href={`/producto/${slug}`}
       className="group block overflow-hidden rounded-xl border border-line bg-cream transition-all duration-300 hover:-translate-y-1 hover:border-[var(--accent,#a97c54)] hover:shadow-[0_16px_34px_-16px_rgba(39,27,18,0.30)]"
     >
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-sand">
+      <div className={`relative ${aspect} w-full overflow-hidden bg-sand`}>
         {thumb ? (
           <Image
             src={thumb}

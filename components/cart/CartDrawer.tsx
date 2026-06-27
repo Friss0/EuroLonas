@@ -90,7 +90,7 @@ export function CartDrawer() {
             <p className="font-mono text-sm text-taupe">Tu carrito está vacío.</p>
           </div>
         ) : (
-          <div className="flex-1 overflow-y-auto px-5 py-4">
+          <div data-lenis-prevent className="flex-1 overflow-y-auto px-5 py-4">
             <ul className="space-y-5">
               {items.map((it) => {
                 const cfg = unidadCantidad(it.unidad);

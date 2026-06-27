@@ -5,6 +5,7 @@ import { Footer } from "@/components/site/Footer";
 import { CartProvider } from "@/context/CartContext";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { WhatsAppFab } from "@/components/site/WhatsAppFab";
+import { SmoothScroll } from "@/components/site/SmoothScroll";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -54,6 +55,7 @@ export default function RootLayout({
     >
       <body>
         <CartProvider>
+          <SmoothScroll />
           <Navbar />
           {children}
           <Footer />

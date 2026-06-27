@@ -155,6 +155,7 @@ export function MobileNav({
       >
         <div className="overflow-hidden">
           <div
+            data-lenis-prevent
             className={`max-h-[calc(100dvh-4rem)] overflow-y-auto border-b border-line bg-cream/80 p-3 backdrop-blur-md ${
               menu ? "" : "pointer-events-none"
             }`}

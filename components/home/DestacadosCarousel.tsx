@@ -21,9 +21,12 @@ export function DestacadosCarousel({
         </h2>
       </div>
 
-      <div className="mt-10 grid grid-cols-2 gap-x-5 gap-y-10 lg:grid-cols-4">
+      {/* Mobile: slider horizontal con snap. Desktop: grilla. */}
+      <div className="mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 [-ms-overflow-style:none] [scrollbar-width:none] sm:grid sm:snap-none sm:grid-cols-2 sm:gap-x-5 sm:gap-y-10 sm:overflow-visible sm:pb-0 lg:grid-cols-4 [&::-webkit-scrollbar]:hidden">
         {items.map((p) => (
-          <ProductCard key={p.id} producto={p} />
+          <div key={p.id} className="min-w-[68%] snap-start sm:min-w-0">
+            <ProductCard producto={p} compact />
+          </div>
         ))}
       </div>
 
