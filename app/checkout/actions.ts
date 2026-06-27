@@ -1,10 +1,14 @@
 "use server";
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
+import { mpEnabled, createPreference } from "@/lib/payments/mercadopago";
+import { getSiteUrl } from "@/lib/seo";
 
 type ItemInput = { variantId: string; cantidad: number };
 
-type Resultado = { error: string } | { ok: true; pedidoId: string };
+type Resultado =
+  | { error: string }
+  | { ok: true; pedidoId: string; redirectUrl?: string };
 
 export async function crearPedido(input: {
   items: ItemInput[];
@@ -26,13 +30,14 @@ export async function crearPedido(input: {
   const ids = input.items.map((i) => i.variantId);
   const { data: variantes } = await supabase
     .from("variantes")
-    .select("id, precio_override, producto:productos ( precio_base )")
+    .select("id, nombre, precio_override, producto:productos ( nombre, precio_base )")
     .in("id", ids);
 
   type V = {
     id: string;
+    nombre: string;
     precio_override: number | null;
-    producto: { precio_base: number | null } | null;
+    producto: { nombre: string; precio_base: number | null } | null;
   };
   const vmap = new Map(
     ((variantes ?? []) as unknown as V[]).map((v) => [v.id, v]),
@@ -82,5 +87,30 @@ export async function crearPedido(input: {
   if (e2) return { error: "No se pudieron guardar los ítems del pedido." };
 
   revalidatePath("/perfil");
+
+  // ── Pago online con Mercado Pago (si está configurado el token) ──
+  if (mpEnabled()) {
+    const prefItems = itemsToInsert.map((i) => {
+      const v = vmap.get(i.variante_id);
+      const prod = v?.producto?.nombre ?? "Producto";
+      const varName = v?.nombre ? ` — ${v.nombre}` : "";
+      return {
+        title: `${prod}${varName} (×${i.cantidad})`,
+        quantity: 1,
+        unitPrice: Math.round(i.precio_unitario * i.cantidad),
+      };
+    });
+    const pref = await createPreference({
+      pedidoId: pedido.id,
+      items: prefItems,
+      payer: { name: input.nombre, email: input.email },
+      baseUrl: getSiteUrl(),
+    });
+    if (pref) {
+      return { ok: true, pedidoId: pedido.id, redirectUrl: pref.initPoint };
+    }
+    // Si MP falla, seguimos con el flujo sin pago online (pedido ya creado).
+  }
+
   return { ok: true, pedidoId: pedido.id };
 }

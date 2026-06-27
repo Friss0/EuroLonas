@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { getProfile } from "@/lib/auth";
 import { CheckoutForm } from "@/components/checkout/CheckoutForm";
+import { mpEnabled } from "@/lib/payments/mercadopago";
 
 export const metadata = { title: "Finalizar compra — Eurolonas" };
 
@@ -20,6 +21,7 @@ export default async function CheckoutPage() {
         defaultNombre={profile.nombre ?? ""}
         defaultEmail={profile.email ?? ""}
         defaultTelefono={profile.telefono ?? ""}
+        mpEnabled={mpEnabled()}
       />
     </main>
   );

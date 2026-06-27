@@ -14,10 +14,12 @@ export function CheckoutForm({
   defaultNombre,
   defaultEmail,
   defaultTelefono,
+  mpEnabled = false,
 }: {
   defaultNombre: string;
   defaultEmail: string;
   defaultTelefono: string;
+  mpEnabled?: boolean;
 }) {
   const router = useRouter();
   const { items, subtotal, clear } = useCart();
@@ -62,6 +64,11 @@ export function CheckoutForm({
     if ("error" in res) {
       setError(res.error);
       setLoading(false);
+      return;
+    }
+    if (res.redirectUrl) {
+      // A Mercado Pago. El carrito se limpia al volver a /checkout/gracias.
+      window.location.href = res.redirectUrl;
       return;
     }
     clear();
@@ -115,11 +122,16 @@ export function CheckoutForm({
           disabled={loading}
           className="flex h-12 w-full items-center justify-center rounded-sm bg-espresso text-sm font-medium text-cream transition-colors hover:bg-bark disabled:opacity-50 sm:w-auto sm:px-8"
         >
-          {loading ? "Registrando…" : "Confirmar pedido"}
+          {loading
+            ? "Procesando…"
+            : mpEnabled
+              ? "Pagar con Mercado Pago"
+              : "Confirmar pedido"}
         </button>
         <p className="font-mono text-[11px] text-taupe">
-          Registramos tu pedido y lo coordinamos por WhatsApp. El pago online
-          (Mercado Pago) se activa pronto.
+          {mpEnabled
+            ? "Vas a pagar de forma segura con Mercado Pago: tarjetas, efectivo y más."
+            : "Registramos tu pedido y lo coordinamos por WhatsApp para el pago y la entrega."}
         </p>
       </form>
 
