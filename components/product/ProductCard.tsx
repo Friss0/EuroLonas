@@ -43,7 +43,7 @@ export function ProductCard({
   const desde = precioDesde(precio_base, variantes);
   const esColor = variantes.some((v) => v.tipo === "color");
   const thumb = productoThumbnail(producto);
-  const aspect = compact ? "aspect-[4/3]" : "aspect-[4/5] sm:aspect-[4/3]";
+  const aspect = compact ? "aspect-[4/3] sm:aspect-[4/5]" : "aspect-[4/5]";
 
   return (
     <Link
