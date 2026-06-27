@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { PasswordInput } from "./PasswordInput";
+import { Captcha, captchaSiteKey } from "./Captcha";
 
 const inputClass =
   "h-11 w-full rounded-sm border border-line bg-paper px-3 text-bark outline-none transition-colors focus:border-camel";
@@ -15,20 +17,27 @@ export function RegisterForm() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [confirmar, setConfirmar] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaKey, setCaptchaKey] = useState(0);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (captchaSiteKey && !captchaToken) {
+      setError("Completá el captcha.");
+      return;
+    }
     setLoading(true);
     setError(null);
     const supabase = createClient();
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { nombre } },
+      options: { data: { nombre }, captchaToken: captchaToken ?? undefined },
     });
     if (error) {
       setError(error.message);
       setLoading(false);
+      setCaptchaKey((k) => k + 1);
       return;
     }
     if (data.session) {
@@ -82,10 +91,9 @@ export function RegisterForm() {
       </label>
       <label className="block space-y-2">
         <span className={labelClass}>Contraseña</span>
-        <input
+        <PasswordInput
           id="registro-password"
           name="password"
-          type="password"
           autoComplete="new-password"
           required
           minLength={6}
@@ -97,6 +105,7 @@ export function RegisterForm() {
           Mínimo 6 caracteres.
         </span>
       </label>
+      <Captcha onVerify={setCaptchaToken} refreshKey={captchaKey} />
       {error && <p className="font-mono text-xs text-[#b5483d]">{error}</p>}
       <button
         type="submit"

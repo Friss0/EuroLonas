@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { PasswordInput } from "./PasswordInput";
+import { Captcha, captchaSiteKey } from "./Captcha";
 
 const inputClass =
   "h-11 w-full rounded-sm border border-line bg-paper px-3 text-bark outline-none transition-colors focus:border-camel";
@@ -15,19 +17,27 @@ export function LoginForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaKey, setCaptchaKey] = useState(0);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (captchaSiteKey && !captchaToken) {
+      setError("Completá el captcha.");
+      return;
+    }
     setLoading(true);
     setError(null);
     const supabase = createClient();
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
+      options: captchaToken ? { captchaToken } : undefined,
     });
     if (error) {
       setError("Email o contraseña incorrectos.");
       setLoading(false);
+      setCaptchaKey((k) => k + 1);
       return;
     }
     // Admin → directo al panel; cliente → al destino pedido (o su perfil).
@@ -64,10 +74,9 @@ export function LoginForm() {
       </label>
       <label className="block space-y-2">
         <span className={labelClass}>Contraseña</span>
-        <input
+        <PasswordInput
           id="login-password"
           name="password"
-          type="password"
           autoComplete="current-password"
           required
           value={password}
@@ -75,6 +84,7 @@ export function LoginForm() {
           className={inputClass}
         />
       </label>
+      <Captcha onVerify={setCaptchaToken} refreshKey={captchaKey} />
       {error && <p className="font-mono text-xs text-[#b5483d]">{error}</p>}
       <button
         type="submit"
