@@ -30,6 +30,7 @@ export type ProductoInput = {
   precio_base: number | null;
   unidad_venta: string;
   imagenes: string[];
+  imagen_miniatura: string | null;
   fotos_referencia: string[];
   destacado: boolean;
   activo: boolean;
@@ -71,6 +72,7 @@ export async function guardarProducto(
     precio_base: input.precio_base,
     unidad_venta: input.unidad_venta,
     imagenes: input.imagenes,
+    imagen_miniatura: input.imagen_miniatura,
     fotos_referencia: input.fotos_referencia,
     destacado: input.destacado,
     activo: input.activo,

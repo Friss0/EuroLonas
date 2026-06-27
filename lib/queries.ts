@@ -19,7 +19,7 @@ type RawProducto = Producto & {
 
 const PRODUCTO_SELECT = `
   id, codigo, nombre, slug, rubro_id, categoria_id, descripcion, ficha_tecnica, specs,
-  precio_base, unidad_venta, imagenes, fotos_referencia, destacado, activo, orden, created_at,
+  precio_base, unidad_venta, imagenes, imagen_miniatura, fotos_referencia, destacado, activo, orden, created_at,
   rubro:rubros ( nombre, slug ),
   categoria:categorias ( id, nombre, slug ),
   variantes ( id, producto_id, tipo, nombre, codigo, swatch_url, swatch_hex, sku, precio_override, stock, activo, orden ),

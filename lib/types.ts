@@ -44,6 +44,7 @@ export interface Producto {
   precio_base: number | null;
   unidad_venta: UnidadVenta;
   imagenes: string[];
+  imagen_miniatura: string | null;
   fotos_referencia: string[];
   destacado: boolean;
   activo: boolean;

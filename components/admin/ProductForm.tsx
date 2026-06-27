@@ -73,6 +73,9 @@ export function ProductForm({
     producto?.orden != null ? String(producto.orden) : "0",
   );
   const [imagenes, setImagenes] = useState<string[]>(producto?.imagenes ?? []);
+  const [imagenMiniatura, setImagenMiniatura] = useState(
+    producto?.imagen_miniatura ?? "",
+  );
   const [fotos, setFotos] = useState<string[]>(
     producto?.fotos_referencia ?? [],
   );
@@ -108,6 +111,24 @@ export function ProductForm({
   const categoriasDelRubro = opciones.categorias.filter(
     (c) => c.rubro_id === rubroId,
   );
+
+  // Candidatas para la miniatura de la card: fotos de colores + imágenes del producto.
+  const miniaturaOpciones = (() => {
+    const seen = new Set<string>();
+    const todas = [
+      ...variantes
+        .filter((v) => v.swatch_url)
+        .map((v) => ({ url: v.swatch_url, label: v.nombre.trim() || "Color" })),
+      ...imagenes.map((u) => ({ url: u, label: "Imagen" })),
+    ];
+    return todas.filter(
+      (o) => !!o.url && !seen.has(o.url) && (seen.add(o.url), true),
+    );
+  })();
+  const miniaturaDefault =
+    variantes.find((v) => v.tipo === "color" && v.swatch_url)?.swatch_url ||
+    imagenes[0] ||
+    "";
 
   async function subir(files: FileList | null, destino: "img" | "foto") {
     if (!files || files.length === 0) return;
@@ -201,6 +222,7 @@ export function ProductForm({
       precio_base: precioBase === "" ? null : Number(precioBase),
       unidad_venta: unidad,
       imagenes,
+      imagen_miniatura: imagenMiniatura || null,
       fotos_referencia: fotos,
       destacado,
       activo,
@@ -602,6 +624,69 @@ export function ProductForm({
             </table>
           </div>
         )}
+      </section>
+
+      {/* Miniatura de la card (foto del catálogo) */}
+      <section>
+        <span className={label}>Miniatura de la card</span>
+        <p className="mt-1 max-w-[60ch] text-xs text-taupe">
+          Foto que se muestra en las cards del catálogo. Por defecto usa la del
+          primer color cargado; elegí otra si querés.
+        </p>
+        <div className="mt-3 flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={() => setImagenMiniatura("")}
+            className={`relative h-24 w-24 overflow-hidden rounded-sm ring-1 transition ${
+              imagenMiniatura === ""
+                ? "ring-2 ring-camel"
+                : "ring-line hover:ring-camel-soft"
+            }`}
+          >
+            {miniaturaDefault ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={miniaturaDefault}
+                alt=""
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <span className="flex h-full w-full items-center justify-center bg-sand text-[10px] text-taupe">
+                sin foto
+              </span>
+            )}
+            <span className="absolute inset-x-0 bottom-0 bg-espresso/75 py-0.5 text-center font-mono text-[9px] uppercase tracking-wide text-cream">
+              Auto
+            </span>
+          </button>
+
+          {miniaturaOpciones.map((o) => (
+            <button
+              key={o.url}
+              type="button"
+              onClick={() => setImagenMiniatura(o.url)}
+              title={o.label}
+              className={`relative h-24 w-24 overflow-hidden rounded-sm ring-1 transition ${
+                imagenMiniatura === o.url
+                  ? "ring-2 ring-camel"
+                  : "ring-line hover:ring-camel-soft"
+              }`}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={o.url}
+                alt={o.label}
+                className="h-full w-full object-cover"
+              />
+            </button>
+          ))}
+
+          {miniaturaOpciones.length === 0 && (
+            <p className="self-center font-mono text-xs text-taupe">
+              Subí imágenes o fotos de color para poder elegir la miniatura.
+            </p>
+          )}
+        </div>
       </section>
 
       {error && (
