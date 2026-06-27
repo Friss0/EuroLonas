@@ -21,7 +21,7 @@ export default async function Home() {
 
       {/* Distribuidor oficial Sauleda — foto de lona roja de fondo */}
       <section
-        className="relative overflow-hidden border-y border-line bg-cover bg-center"
+        className="relative overflow-hidden bg-cover bg-center"
         style={{ backgroundImage: "url(/banner-sauleda.jpg)" }}
       >
         {/* Oscurecido sutil hacia la izquierda para legibilidad del texto blanco */}
@@ -29,9 +29,18 @@ export default async function Home() {
           aria-hidden
           className="absolute inset-0 bg-gradient-to-r from-espresso/35 via-espresso/10 to-transparent"
         />
+        {/* Fade de los bordes hacia el crema de la página (difumina arriba/abajo) */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-cream to-transparent"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-cream to-transparent"
+        />
         <div className="relative z-10 mx-auto max-w-[1280px] px-[clamp(20px,5vw,80px)] py-[clamp(48px,7vw,96px)]">
           <Reveal>
-            <p className="font-mono text-xs font-semibold uppercase tracking-[0.22em] text-bark">
+            <p className="font-mono text-xs font-semibold uppercase tracking-[0.22em] text-sand">
               Representación oficial
             </p>
             <p className="mt-5 max-w-[24ch] font-display text-[clamp(1.8rem,1.2rem+2.2vw,2.8rem)] leading-[1.1] text-white">
