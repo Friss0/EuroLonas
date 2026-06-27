@@ -16,9 +16,9 @@ export default async function Home() {
 
       <RubroBlocks />
 
-      <DestacadosCarousel productos={destacados} />
-
       <AplicacionesStack />
+
+      <DestacadosCarousel productos={destacados} />
 
       {/* Distribuidor oficial Sauleda — con trama textil sutil de fondo */}
       <section className="relative overflow-hidden border-y border-line bg-sand">
