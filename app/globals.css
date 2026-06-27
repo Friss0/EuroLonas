@@ -1,0 +1,162 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Fondos / superficies ── */
+  --color-cream: #f7f2e8; /* fondo de página */
+  --color-sand: #efe6d6; /* banda alterna / bloque mute */
+  --color-paper: #fcfaf4; /* superficie más clara (uso puntual) */
+
+  /* ── Marrones — texto y marca ── */
+  --color-espresso: #271b12; /* máximo contraste, overlays, titulares fuertes */
+  --color-bark: #4a3324; /* TEXTO principal + wordmark "EURO LONAS" */
+  --color-cocoa: #6b4a33; /* títulos sobre fondo sand */
+  --color-taupe: #6e5d49; /* texto secundario / labels (AA en cream) */
+
+  /* ── Tierra / camel — acento y decoración ── */
+  --color-camel: #a97c54; /* acento, líneas marcadas, hover */
+  --color-camel-soft: #c7a781; /* decoración, swatches placeholder */
+
+  /* ── Utilidad ── */
+  --color-line: rgba(39, 27, 18, 0.12); /* hairlines / divisores */
+  --color-line-strong: rgba(39, 27, 18, 0.24);
+  --color-overlay: rgba(31, 21, 14, 0.42); /* overlay del hero sobre el video */
+
+  /* ── Tipografía ── */
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-fraunces), ui-serif, Georgia, "Times New Roman", serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
+
+  /* ── Breakpoint extra "desktop grande" (se ordena después de xl=1280) ── */
+  --breakpoint-wide: 1440px;
+
+  /* ── Radios mínimos (editorial, casi recto) ── */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+
+  /* ── Animaciones (sello: el color que aparece) ── */
+  --animate-fade-up: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-fade-in: fade-in 0.6s ease-out both;
+  --animate-swatch-in: swatch-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes swatch-in {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Motivos decorativos de la sección de rubros */
+@keyframes motif-weave {
+  to {
+    background-position: 28px 0, -28px 0;
+  }
+}
+@keyframes motif-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes motif-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+@keyframes motif-ticks {
+  to {
+    background-position: -40px 0;
+  }
+}
+/* Trama textil que deriva en loop perfecto (período de 14px) */
+@keyframes motif-textile {
+  to {
+    background-position: 14px 14px, 14px 14px;
+  }
+}
+@keyframes motif-ruler {
+  to {
+    background-position: -14px 0;
+  }
+}
+
+/* Insumos: la regla se "dibuja" al hacer hover (o focus) sobre la card.
+   Sin gatear por media query, así el hover funciona en cualquier equipo que
+   tenga puntero (mouse/trackpad), reporte lo que reporte any-hover. */
+.rubro-ruler {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s ease-out;
+}
+.group:hover .rubro-ruler,
+.group:focus-within .rubro-ruler {
+  transform: scaleX(1);
+}
+
+/* Táctil puro (ningún puntero hace hover): no hay hover posible, así que
+   mostramos la regla fija y animamos el muestrario de Telas. */
+@media (any-hover: none) {
+  .rubro-ruler {
+    transform: scaleX(1);
+  }
+  .rubro-swatch {
+    opacity: 1 !important;
+    translate: none !important;
+    animation: motif-float 4.5s ease-in-out infinite;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--color-cream);
+    color: var(--color-bark);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: var(--color-camel);
+    color: var(--color-paper);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
