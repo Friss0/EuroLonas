@@ -32,7 +32,7 @@ export function ContactBeamsBg() {
         beamWidth={2.4}
         beamHeight={16}
         beamNumber={14}
-        lightColor="#caa063"
+        lightColor="#ffffff"
         speed={2}
         noiseIntensity={1.6}
         scale={0.2}
