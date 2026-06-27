@@ -58,6 +58,16 @@
     opacity: 1;
   }
 }
+/* Placeholder del fondo animado de la sección de contacto (se reemplaza luego). */
+@keyframes contact-pan {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
 @keyframes swatch-in {
   from {
     opacity: 0;

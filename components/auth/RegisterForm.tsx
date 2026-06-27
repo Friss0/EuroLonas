@@ -6,7 +6,7 @@ import { PasswordInput } from "./PasswordInput";
 import { Captcha, captchaSiteKey } from "./Captcha";
 
 const inputClass =
-  "h-11 w-full rounded-sm border border-line bg-paper px-3 text-bark outline-none transition-colors focus:border-camel";
+  "h-11 w-full rounded-lg border border-line bg-paper px-3 text-bark outline-none transition-colors focus:border-camel";
 const labelClass = "font-mono text-xs uppercase tracking-[0.16em] text-cocoa";
 
 export function RegisterForm() {
@@ -52,7 +52,7 @@ export function RegisterForm() {
 
   if (confirmar) {
     return (
-      <div className="rounded-sm border border-line bg-paper p-5">
+      <div className="rounded-lg border border-line bg-paper p-5">
         <p className="text-bark">
           Te enviamos un email a <span className="font-medium">{email}</span>{" "}
           para confirmar tu cuenta. Confirmala y después ingresá.
@@ -110,7 +110,7 @@ export function RegisterForm() {
       <button
         type="submit"
         disabled={loading}
-        className="flex h-12 w-full items-center justify-center rounded-sm bg-espresso text-sm font-medium text-cream transition-colors hover:bg-bark disabled:opacity-50"
+        className="flex h-12 w-full items-center justify-center rounded-full bg-espresso text-sm font-medium text-cream transition-colors hover:bg-bark disabled:opacity-50"
       >
         {loading ? "Creando cuenta…" : "Crear cuenta"}
       </button>
