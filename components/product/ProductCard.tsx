@@ -3,6 +3,7 @@ import Image from "next/image";
 import type { ProductoConVariantes } from "@/lib/queries";
 import { formatPrecio, unidadSufijo, precioDesde } from "@/lib/format";
 import { SwatchMosaic } from "./SwatchMosaic";
+import { CardBuyButton } from "./CardBuyButton";
 
 /**
  * Foto de la miniatura de la card, en orden:
@@ -20,18 +21,17 @@ export function productoThumbnail(p: ProductoConVariantes): string | null {
 }
 
 /**
- * Card de producto ESTÁNDAR (misma en catálogo, /productos, destacados y
- * aplicaciones). Esquinas redondeadas, miniatura, nombre, precio "desde" y
- * muestrario de colores. En las páginas de aplicaciones toma el color de acento
- * vía la variable CSS --accent; en el resto cae al camel/cocoa de marca.
+ * Card de producto ESTÁNDAR (catálogo, /productos, destacados y aplicaciones):
+ * esquinas redondeadas, miniatura, precio "desde", muestrario de colores y un
+ * botón "Comprar" (agrega la variante por defecto al carrito). En aplicaciones
+ * toma el color de acento vía --accent; en el resto, camel/cocoa de marca.
  */
 export function ProductCard({
   producto,
   compact = false,
 }: {
   producto: ProductoConVariantes;
-  /** `compact` = foto 4:3 siempre (slider). Por defecto la foto es más alta en
-   *  mobile (4:5) para que entre ~un producto por pantalla, y 4:3 en desktop. */
+  /** `compact` = foto 4:3 en mobile (slider). Por defecto la foto es alta (4:5). */
   compact?: boolean;
 }) {
   const { variantes, nombre, slug, codigo, unidad_venta, precio_base } =
@@ -45,78 +45,96 @@ export function ProductCard({
   const thumb = productoThumbnail(producto);
   const aspect = compact ? "aspect-[4/3] sm:aspect-[4/5]" : "aspect-[4/5]";
 
+  // ¿Se puede "Comprar"? Hay alguna variante activa con precio > 0
+  // (mismo criterio que el precio "desde").
+  const buyable = variantes.some(
+    (v) => v.activo && (v.precio_override ?? precio_base ?? 0) > 0,
+  );
+
   return (
-    <Link
-      href={`/producto/${slug}`}
-      className="group block overflow-hidden rounded-xl border border-line bg-cream transition-all duration-300 hover:-translate-y-1 hover:border-[var(--accent,#a97c54)] hover:shadow-[0_16px_34px_-16px_rgba(39,27,18,0.30)]"
-    >
-      <div className={`relative ${aspect} w-full overflow-hidden bg-sand`}>
-        {thumb ? (
-          <Image
-            src={thumb}
-            alt={nombre}
-            fill
-            sizes="(max-width: 768px) 50vw, 25vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-          />
-        ) : hexes.length ? (
-          <SwatchMosaic
-            hexes={hexes}
-            className="h-full w-full transition-transform duration-500 group-hover:scale-[1.04]"
-          />
-        ) : (
-          <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-taupe">
-            <span className="font-mono text-[10px] uppercase tracking-[0.2em]">
-              Insumo
-            </span>
-            {codigo && (
-              <span className="font-mono text-sm text-bark">{codigo}</span>
-            )}
-          </div>
-        )}
-      </div>
-
-      <div className="px-4 pb-4 pt-3">
-        <h3 className="font-sans text-sm font-bold uppercase leading-snug tracking-wide text-[var(--accent,#6b4a33)]">
-          {nombre}
-        </h3>
-        <p className="mt-1 text-sm text-taupe">
-          {desde ? (
-            <>
-              Desde <span className="text-bark">{formatPrecio(desde)}</span>{" "}
-              <span className="font-mono text-xs">
-                {unidadSufijo(unidad_venta)}
-              </span>
-            </>
+    <div className="group flex flex-col overflow-hidden rounded-xl border border-line bg-cream transition-all duration-300 hover:-translate-y-1 hover:border-[var(--accent,#a97c54)] hover:shadow-[0_16px_34px_-16px_rgba(39,27,18,0.30)]">
+      <Link href={`/producto/${slug}`} className="block">
+        <div className={`relative ${aspect} w-full overflow-hidden bg-sand`}>
+          {thumb ? (
+            <Image
+              src={thumb}
+              alt={nombre}
+              fill
+              sizes="(max-width: 768px) 50vw, 25vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+            />
+          ) : hexes.length ? (
+            <SwatchMosaic
+              hexes={hexes}
+              className="h-full w-full transition-transform duration-500 group-hover:scale-[1.04]"
+            />
           ) : (
-            "Consultar precio"
-          )}
-        </p>
-
-        {esColor && hexes.length > 0 && (
-          <div className="mt-2.5 flex items-center gap-1">
-            {hexes.slice(0, 6).map((h, i) => (
-              <span
-                key={i}
-                className="h-3.5 w-3.5 rounded-[2px] ring-1 ring-line"
-                style={{ backgroundColor: h }}
-              />
-            ))}
-            {hexes.length > 6 && (
-              <span className="ml-1 font-mono text-[10px] text-taupe">
-                +{hexes.length - 6}
+            <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-taupe">
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em]">
+                Insumo
               </span>
-            )}
-          </div>
-        )}
+              {codigo && (
+                <span className="font-mono text-sm text-bark">{codigo}</span>
+              )}
+            </div>
+          )}
+        </div>
 
-        {!esColor && variantes.length > 0 && (
-          <p className="mt-2 font-mono text-[11px] uppercase tracking-wide text-taupe">
-            {variantes.length}{" "}
-            {variantes[0].tipo === "medida" ? "medidas" : "modelos"}
+        <div className="px-4 pt-3">
+          <h3 className="font-sans text-sm font-bold uppercase leading-snug tracking-wide text-[var(--accent,#6b4a33)]">
+            {nombre}
+          </h3>
+          <p className="mt-1 text-sm text-taupe">
+            {desde ? (
+              <>
+                Desde <span className="text-bark">{formatPrecio(desde)}</span>{" "}
+                <span className="font-mono text-xs">
+                  {unidadSufijo(unidad_venta)}
+                </span>
+              </>
+            ) : (
+              "Consultar precio"
+            )}
           </p>
+
+          {esColor && hexes.length > 0 && (
+            <div className="mt-2.5 flex items-center gap-1">
+              {hexes.slice(0, 6).map((h, i) => (
+                <span
+                  key={i}
+                  className="h-3.5 w-3.5 rounded-[2px] ring-1 ring-line"
+                  style={{ backgroundColor: h }}
+                />
+              ))}
+              {hexes.length > 6 && (
+                <span className="ml-1 font-mono text-[10px] text-taupe">
+                  +{hexes.length - 6}
+                </span>
+              )}
+            </div>
+          )}
+
+          {!esColor && variantes.length > 0 && (
+            <p className="mt-2 font-mono text-[11px] uppercase tracking-wide text-taupe">
+              {variantes.length}{" "}
+              {variantes[0].tipo === "medida" ? "medidas" : "modelos"}
+            </p>
+          )}
+        </div>
+      </Link>
+
+      <div className="mt-auto px-4 pb-4 pt-3">
+        {buyable ? (
+          <CardBuyButton producto={producto} />
+        ) : (
+          <Link
+            href={`/producto/${slug}`}
+            className="flex h-10 w-full items-center justify-center rounded-lg border border-line text-[11px] font-semibold uppercase tracking-[0.12em] text-bark transition-colors hover:border-camel hover:text-camel"
+          >
+            Ver producto
+          </Link>
         )}
       </div>
-    </Link>
+    </div>
   );
 }
