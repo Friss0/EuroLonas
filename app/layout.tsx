@@ -6,7 +6,12 @@ import { CartProvider } from "@/context/CartContext";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { WhatsAppFab } from "@/components/site/WhatsAppFab";
 import { SmoothScroll } from "@/components/site/SmoothScroll";
+import { getSiteUrl } from "@/lib/seo";
 import "./globals.css";
+
+const SITE_URL = getSiteUrl();
+const DESCRIPTION =
+  "Distribuidor oficial Sauleda en Argentina. Lonas acrílicas, Soltis y Cristal PVC, e insumos para toldos. Telas por metro y por rollo.";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -27,9 +32,43 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Eurolonas — Lonas técnicas Sauleda en Argentina",
-  description:
-    "Distribuidor oficial Sauleda en Argentina. Lonas acrílicas, Soltis y Cristal PVC, e insumos para toldos. Telas por metro y por rollo.",
+  description: DESCRIPTION,
+  applicationName: "Eurolonas",
+  keywords: [
+    "lonas",
+    "lonas técnicas",
+    "Sauleda",
+    "toldos",
+    "telas acrílicas",
+    "Soltis",
+    "Cristal PVC",
+    "insumos para toldos",
+    "tapicería náutica",
+    "Argentina",
+  ],
+  authors: [{ name: "Eurolonas" }],
+  creator: "Eurolonas",
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    locale: "es_AR",
+    siteName: "Eurolonas",
+    url: SITE_URL,
+    title: "Eurolonas — Lonas técnicas Sauleda en Argentina",
+    description: DESCRIPTION,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Eurolonas — Lonas técnicas Sauleda en Argentina",
+    description: DESCRIPTION,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+  },
   // Favicon optimizado (encuadrado con padding transparente). El ?v fuerza a
   // los navegadores a refrescar el ícono cacheado al cambiarlo.
   icons: {
@@ -54,6 +93,20 @@ export default function RootLayout({
       className={`${fraunces.variable} ${geist.variable} ${geistMono.variable}`}
     >
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Eurolonas",
+              url: SITE_URL,
+              logo: `${SITE_URL}/eurolonas-favicon-256.png`,
+              description: DESCRIPTION,
+              areaServed: "AR",
+            }),
+          }}
+        />
         <CartProvider>
           <SmoothScroll />
           <Navbar />
