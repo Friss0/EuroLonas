@@ -48,13 +48,13 @@ export function Hero() {
         >
           <Link
             href="#contacto"
-            className="flex h-12 items-center rounded-sm bg-paper px-7 text-sm font-medium text-espresso transition-colors hover:bg-camel hover:text-paper"
+            className="flex h-12 items-center rounded-full bg-paper px-7 text-sm font-medium text-espresso transition-colors hover:bg-camel hover:text-paper"
           >
             Contáctanos
           </Link>
           <Link
             href="/productos"
-            className="flex h-12 items-center rounded-sm border border-[#fbf8f2]/40 px-7 text-sm font-medium text-paper transition-colors hover:bg-[#fbf8f2]/10"
+            className="flex h-12 items-center rounded-full border border-[#fbf8f2]/40 px-7 text-sm font-medium text-paper transition-colors hover:bg-[#fbf8f2]/10"
           >
             Ver productos
           </Link>

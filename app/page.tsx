@@ -3,6 +3,7 @@ import { RubroBlocks } from "@/components/home/RubroBlocks";
 import { DestacadosCarousel } from "@/components/home/DestacadosCarousel";
 import { AplicacionesStack } from "@/components/home/AplicacionesStack";
 import { ContactForm } from "@/components/home/ContactForm";
+import { ParallaxBg } from "@/components/ui/ParallaxBg";
 import { Reveal } from "@/components/ui/Reveal";
 import { getDestacados } from "@/lib/queries";
 
@@ -19,11 +20,9 @@ export default async function Home() {
 
       <DestacadosCarousel productos={destacados} />
 
-      {/* Distribuidor oficial Sauleda — foto de lona roja de fondo */}
-      <section
-        className="relative overflow-hidden border-y border-line bg-cover bg-center"
-        style={{ backgroundImage: "url(/banner-sauleda.jpg)" }}
-      >
+      {/* Distribuidor oficial Sauleda — foto de lona roja con parallax */}
+      <section className="relative overflow-hidden border-y border-line">
+        <ParallaxBg src="/banner-sauleda.jpg" />
         {/* Oscurecido sutil hacia la izquierda para legibilidad del texto blanco */}
         <div
           aria-hidden

@@ -101,7 +101,7 @@ export function ProductsMenu({ products }: { products: ProductoMenu[] }) {
                 <Link
                   href="/productos"
                   onClick={() => setOpen(false)}
-                  className="mt-5 flex h-12 w-full items-center justify-between gap-2 whitespace-nowrap rounded-sm bg-espresso px-5 text-sm font-medium text-cream transition-colors hover:bg-bark"
+                  className="mt-5 flex h-12 w-full items-center justify-between gap-2 whitespace-nowrap rounded-full bg-espresso px-5 text-sm font-medium text-cream transition-colors hover:bg-bark"
                 >
                   Ver todos los productos
                   <svg
