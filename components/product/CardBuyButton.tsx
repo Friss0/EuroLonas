@@ -11,11 +11,11 @@ import { useCart } from "@/context/CartContext";
 export const buyBtnClass =
   "flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-camel/40 bg-camel/10 text-[11px] font-semibold uppercase tracking-[0.14em] text-cocoa transition-all duration-300 hover:border-camel hover:bg-camel hover:text-paper";
 
-export function BagIcon() {
+export function CartIcon() {
   return (
     <svg
-      width="15"
-      height="15"
+      width="18"
+      height="18"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -24,8 +24,9 @@ export function BagIcon() {
       strokeLinejoin="round"
       aria-hidden
     >
-      <path d="M6 8h12l-1 11H7L6 8Z" />
-      <path d="M9 8a3 3 0 0 1 6 0" />
+      <circle cx="9" cy="21" r="1" />
+      <circle cx="19" cy="21" r="1" />
+      <path d="M2 3h2l2.4 12.3a2 2 0 0 0 2 1.7h8.5a2 2 0 0 0 2-1.6L21.5 7H5.5" />
     </svg>
   );
 }
@@ -82,7 +83,7 @@ export function CardBuyButton({
         "Agregado ✓"
       ) : (
         <>
-          <BagIcon />
+          <CartIcon />
           Comprar
         </>
       )}

@@ -3,7 +3,7 @@ import Image from "next/image";
 import type { ProductoConVariantes } from "@/lib/queries";
 import { formatPrecio, unidadSufijo, precioDesde } from "@/lib/format";
 import { SwatchMosaic } from "./SwatchMosaic";
-import { CardBuyButton, buyBtnClass, BagIcon } from "./CardBuyButton";
+import { CardBuyButton, buyBtnClass, CartIcon } from "./CardBuyButton";
 
 /**
  * Foto de la miniatura de la card, en orden:
@@ -138,7 +138,7 @@ export function ProductCard({
             aria-label={`Comprar ${nombre}`}
             className={buyBtnClass}
           >
-            <BagIcon />
+            <CartIcon />
             Comprar
           </Link>
         ) : (
