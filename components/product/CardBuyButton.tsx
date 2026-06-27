@@ -6,10 +6,34 @@ import { precioEfectivo } from "@/lib/types";
 import { unidadCantidad } from "@/lib/format";
 import { useCart } from "@/context/CartContext";
 
+// Estilo compartido del botón/enlace "Comprar" de la card (claro, se rellena
+// en camel al hover).
+export const buyBtnClass =
+  "flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-camel/40 bg-camel/10 text-[11px] font-semibold uppercase tracking-[0.14em] text-cocoa transition-all duration-300 hover:border-camel hover:bg-camel hover:text-paper";
+
+export function BagIcon() {
+  return (
+    <svg
+      width="15"
+      height="15"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M6 8h12l-1 11H7L6 8Z" />
+      <path d="M9 8a3 3 0 0 1 6 0" />
+    </svg>
+  );
+}
+
 /**
- * Botón "Comprar" para la card: agrega la variante por defecto (el primer
- * color/modelo activo, igual que la ficha) al carrito y abre el drawer.
- * Sólo se renderiza si el producto es comprable (ver ProductCard).
+ * Botón "Comprar" para productos SIN variantes (una sola opción): agrega esa
+ * variante al carrito y abre el drawer. Los productos con variantes usan, en su
+ * lugar, un enlace a la ficha (ver ProductCard).
  */
 export function CardBuyButton({
   producto,
@@ -52,26 +76,13 @@ export function CardBuyButton({
       type="button"
       onClick={handleAdd}
       aria-label={`Comprar ${producto.nombre}`}
-      className="flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-espresso text-[11px] font-semibold uppercase tracking-[0.12em] text-cream transition-colors hover:bg-bark"
+      className={buyBtnClass}
     >
       {added ? (
         "Agregado ✓"
       ) : (
         <>
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.7"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden
-          >
-            <path d="M6 8h12l-1 11H7L6 8Z" />
-            <path d="M9 8a3 3 0 0 1 6 0" />
-          </svg>
+          <BagIcon />
           Comprar
         </>
       )}

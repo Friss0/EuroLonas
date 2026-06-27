@@ -3,7 +3,7 @@ import Image from "next/image";
 import type { ProductoConVariantes } from "@/lib/queries";
 import { formatPrecio, unidadSufijo, precioDesde } from "@/lib/format";
 import { SwatchMosaic } from "./SwatchMosaic";
-import { CardBuyButton } from "./CardBuyButton";
+import { CardBuyButton, buyBtnClass, BagIcon } from "./CardBuyButton";
 
 /**
  * Foto de la miniatura de la card, en orden:
@@ -45,11 +45,11 @@ export function ProductCard({
   const thumb = productoThumbnail(producto);
   const aspect = compact ? "aspect-[4/3] sm:aspect-[4/5]" : "aspect-[4/5]";
 
-  // ¿Se puede "Comprar"? Hay alguna variante activa con precio > 0
-  // (mismo criterio que el precio "desde").
-  const buyable = variantes.some(
-    (v) => v.activo && (v.precio_override ?? precio_base ?? 0) > 0,
-  );
+  // Comprable = alguna variante activa con precio (mismo criterio que "desde").
+  // Con más de una variante hay que elegir → el botón lleva a la ficha.
+  const activas = variantes.filter((v) => v.activo);
+  const buyable = activas.some((v) => (v.precio_override ?? precio_base ?? 0) > 0);
+  const tieneVariantes = activas.length > 1;
 
   return (
     <div className="group flex flex-col overflow-hidden rounded-xl border border-line bg-cream transition-all duration-300 hover:-translate-y-1 hover:border-[var(--accent,#a97c54)] hover:shadow-[0_16px_34px_-16px_rgba(39,27,18,0.30)]">
@@ -124,15 +124,26 @@ export function ProductCard({
       </Link>
 
       <div className="mt-auto px-4 pb-4 pt-3">
-        {buyable ? (
-          <CardBuyButton producto={producto} />
-        ) : (
+        {!buyable ? (
           <Link
             href={`/producto/${slug}`}
-            className="flex h-10 w-full items-center justify-center rounded-lg border border-line text-[11px] font-semibold uppercase tracking-[0.12em] text-bark transition-colors hover:border-camel hover:text-camel"
+            className="flex h-11 w-full items-center justify-center rounded-lg border border-line text-[11px] font-semibold uppercase tracking-[0.12em] text-taupe transition-colors hover:border-camel hover:text-camel"
           >
             Ver producto
           </Link>
+        ) : tieneVariantes ? (
+          // Con variantes: el botón lleva a la ficha para elegir.
+          <Link
+            href={`/producto/${slug}`}
+            aria-label={`Comprar ${nombre}`}
+            className={buyBtnClass}
+          >
+            <BagIcon />
+            Comprar
+          </Link>
+        ) : (
+          // Sin variantes (una sola opción): agrega directo al carrito.
+          <CardBuyButton producto={producto} />
         )}
       </div>
     </div>
