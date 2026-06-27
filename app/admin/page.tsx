@@ -45,6 +45,9 @@ export default async function AdminDashboard({
 
   const cantidad = filtrados.length;
   const ingresos = filtrados.reduce((s, p) => s + p.total, 0);
+  const cobrado = filtrados
+    .filter((p) => ["pagado", "preparando", "enviado"].includes(p.estado))
+    .reduce((s, p) => s + p.total, 0);
 
   const cards = [
     { label: "Productos", value: String(stats.productos) },
@@ -93,7 +96,7 @@ export default async function AdminDashboard({
           />
         </div>
 
-        <div className="mt-5 grid grid-cols-2 gap-4 sm:max-w-md">
+        <div className="mt-5 grid grid-cols-3 gap-4 sm:max-w-xl">
           <div className="rounded-sm border border-line bg-sand/40 p-4">
             <p className="font-mono text-xs uppercase tracking-[0.16em] text-taupe">
               Pedidos
@@ -104,10 +107,18 @@ export default async function AdminDashboard({
           </div>
           <div className="rounded-sm border border-line bg-sand/40 p-4">
             <p className="font-mono text-xs uppercase tracking-[0.16em] text-taupe">
-              Ingresos
+              Total
             </p>
             <p className="mt-2 font-display text-3xl text-espresso">
               {formatPrecio(ingresos)}
+            </p>
+          </div>
+          <div className="rounded-sm border border-line bg-sand/40 p-4">
+            <p className="font-mono text-xs uppercase tracking-[0.16em] text-taupe">
+              Cobrado
+            </p>
+            <p className="mt-2 font-display text-3xl text-[#4f7d4a]">
+              {formatPrecio(cobrado)}
             </p>
           </div>
         </div>
@@ -139,7 +150,15 @@ export default async function AdminDashboard({
                       {p.cliente_telefono ? ` · ${p.cliente_telefono}` : ""}
                     </p>
                   </div>
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-3">
+                    {p.mp_payment_id && (
+                      <span
+                        title={`MP · ${p.mp_payment_id}`}
+                        className="inline-flex items-center rounded-full bg-[#5b8a4f]/12 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wide text-[#4f7d4a]"
+                      >
+                        Pago online
+                      </span>
+                    )}
                     <span className="text-base text-espresso">
                       {formatPrecio(p.total)}
                     </span>

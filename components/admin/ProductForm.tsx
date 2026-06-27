@@ -265,6 +265,7 @@ export function ProductForm({
           <div className="flex items-center gap-3">
             <label className="flex items-center gap-2 text-sm text-bark">
               <input
+                name="activo"
                 type="checkbox"
                 checked={activo}
                 onChange={(e) => setActivo(e.target.checked)}
@@ -274,6 +275,7 @@ export function ProductForm({
             </label>
             <label className="flex items-center gap-2 text-sm text-bark">
               <input
+                name="destacado"
                 type="checkbox"
                 checked={destacado}
                 onChange={(e) => {
@@ -304,6 +306,8 @@ export function ProductForm({
         <label className="block space-y-2 sm:col-span-2">
           <span className={label}>Nombre *</span>
           <input
+            id="prod-nombre"
+            name="nombre"
             required
             value={nombre}
             onChange={(e) => setNombre(e.target.value)}
@@ -313,6 +317,7 @@ export function ProductForm({
         <label className="block space-y-2">
           <span className={label}>Código</span>
           <input
+            name="codigo"
             value={codigo}
             onChange={(e) => setCodigo(e.target.value)}
             className={input}
@@ -321,6 +326,7 @@ export function ProductForm({
         <label className="block space-y-2">
           <span className={label}>Orden</span>
           <input
+            name="orden"
             type="number"
             value={orden}
             onChange={(e) => setOrden(e.target.value)}
@@ -330,6 +336,7 @@ export function ProductForm({
         <label className="block space-y-2">
           <span className={label}>Rubro *</span>
           <select
+            name="rubro"
             required
             value={rubroId}
             onChange={(e) => {
@@ -349,6 +356,7 @@ export function ProductForm({
         <label className="block space-y-2">
           <span className={label}>Categoría</span>
           <select
+            name="categoria"
             value={categoriaId}
             onChange={(e) => setCategoriaId(e.target.value)}
             disabled={!rubroId}
@@ -365,6 +373,7 @@ export function ProductForm({
         <label className="block space-y-2">
           <span className={label}>Precio base</span>
           <input
+            name="precio_base"
             type="number"
             step="0.01"
             value={precioBase}
@@ -376,6 +385,7 @@ export function ProductForm({
         <label className="block space-y-2">
           <span className={label}>Unidad de venta</span>
           <select
+            name="unidad"
             value={unidad}
             onChange={(e) => setUnidad(e.target.value)}
             className={input}
@@ -419,6 +429,7 @@ export function ProductForm({
         <label className="block space-y-2">
           <span className={label}>Descripción</span>
           <textarea
+            name="descripcion"
             value={descripcion}
             onChange={(e) => setDescripcion(e.target.value)}
             rows={3}
@@ -428,6 +439,7 @@ export function ProductForm({
         <label className="block space-y-2">
           <span className={label}>Ficha técnica</span>
           <textarea
+            name="ficha_tecnica"
             value={fichaTecnica}
             onChange={(e) => setFichaTecnica(e.target.value)}
             rows={3}
@@ -491,6 +503,7 @@ export function ProductForm({
                   <tr key={v._key} className="border-b border-line/60">
                     <td className="py-2 pr-2">
                       <select
+                        name={`v-${v._key}-tipo`}
                         value={v.tipo}
                         onChange={(e) =>
                           setVar(v._key, {
@@ -506,6 +519,7 @@ export function ProductForm({
                     </td>
                     <td className="py-2 pr-2">
                       <input
+                        name={`v-${v._key}-nombre`}
                         value={v.nombre}
                         onChange={(e) =>
                           setVar(v._key, { nombre: e.target.value })
@@ -515,6 +529,7 @@ export function ProductForm({
                     </td>
                     <td className="py-2 pr-2">
                       <input
+                        name={`v-${v._key}-codigo`}
                         value={v.codigo}
                         onChange={(e) =>
                           setVar(v._key, { codigo: e.target.value })
@@ -525,6 +540,7 @@ export function ProductForm({
                     <td className="py-2 pr-2">
                       {v.tipo === "color" ? (
                         <input
+                          name={`v-${v._key}-color`}
                           type="color"
                           value={v.swatch_hex}
                           onChange={(e) =>
@@ -571,6 +587,7 @@ export function ProductForm({
                     </td>
                     <td className="py-2 pr-2">
                       <input
+                        name={`v-${v._key}-sku`}
                         value={v.sku}
                         onChange={(e) => setVar(v._key, { sku: e.target.value })}
                         className={`${cellInput} w-[100px]`}
@@ -578,6 +595,7 @@ export function ProductForm({
                     </td>
                     <td className="py-2 pr-2">
                       <input
+                        name={`v-${v._key}-precio`}
                         type="number"
                         step="0.01"
                         value={v.precio_override}
@@ -589,6 +607,7 @@ export function ProductForm({
                     </td>
                     <td className="py-2 pr-2">
                       <input
+                        name={`v-${v._key}-stock`}
                         type="number"
                         step="0.01"
                         value={v.stock}
@@ -600,6 +619,7 @@ export function ProductForm({
                     </td>
                     <td className="py-2 pr-2 text-center">
                       <input
+                        name={`v-${v._key}-activo`}
                         type="checkbox"
                         checked={v.activo}
                         onChange={(e) =>

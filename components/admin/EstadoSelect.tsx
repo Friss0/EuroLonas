@@ -12,6 +12,14 @@ const ESTADOS = [
   "cancelado",
 ];
 
+const COLOR: Record<string, string> = {
+  pendiente: "#c79a3e", // ámbar
+  pagado: "#5b8a4f", // verde
+  preparando: "#3a5a72", // azul
+  enviado: "#2f7d72", // teal
+  cancelado: "#b5483d", // rojo
+};
+
 export function EstadoSelect({
   pedidoId,
   estado,
@@ -36,12 +44,17 @@ export function EstadoSelect({
 
   return (
     <div className="relative">
+      <span
+        className="pointer-events-none absolute left-3 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full"
+        style={{ backgroundColor: COLOR[value] ?? "#b0a89a" }}
+        aria-hidden
+      />
       <select
         value={value}
         onChange={onChange}
         disabled={pending}
         aria-label="Estado del pedido"
-        className="h-9 cursor-pointer appearance-none rounded-sm border border-line bg-paper pl-3 pr-8 text-xs text-bark capitalize outline-none transition-colors hover:border-camel-soft focus:border-camel disabled:opacity-50"
+        className="h-9 cursor-pointer appearance-none rounded-sm border border-line bg-paper pl-7 pr-8 text-xs text-bark capitalize outline-none transition-colors hover:border-camel-soft focus:border-camel disabled:opacity-50"
       >
         {ESTADOS.map((s) => (
           <option key={s} value={s}>

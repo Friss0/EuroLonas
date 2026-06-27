@@ -79,6 +79,7 @@ export type PedidoAdmin = {
   cliente_telefono: string | null;
   total: number;
   estado: string;
+  mp_payment_id: string | null;
   created_at: string;
   pedido_items: {
     id: string;
@@ -97,7 +98,7 @@ export async function getPedidosAdmin(): Promise<PedidoAdmin[]> {
   const { data } = await supabase
     .from("pedidos")
     .select(
-      `id, cliente_nombre, cliente_email, cliente_telefono, total, estado, created_at,
+      `id, cliente_nombre, cliente_email, cliente_telefono, total, estado, mp_payment_id, created_at,
        pedido_items ( id, cantidad, precio_unitario,
          variante:variantes ( nombre, codigo, producto:productos ( id, nombre ) ) )`,
     )
