@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ContactFormFields } from "@/components/contact/ContactFormFields";
+import { ContactBeamsBg } from "@/components/contact/ContactBeamsBg";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -16,25 +17,8 @@ export default function ContactoPage() {
       <div className="grid overflow-hidden rounded-[28px] shadow-[0_34px_90px_-34px_rgba(31,21,14,0.4)] ring-1 ring-line md:grid-cols-2">
         {/* ── Mitad 1: título + fondo animado ── */}
         <div className="relative flex min-h-[340px] flex-col justify-center gap-5 p-[clamp(28px,5vw,56px)] text-paper">
-          {/* ===========================================================
-              FONDO ANIMADO — placeholder. Reemplazar este <div> por el
-              componente del fondo animado cuando pases el prompt.
-              =========================================================== */}
-          <div
-            aria-hidden
-            className="absolute inset-0 -z-10"
-            style={{
-              background:
-                "linear-gradient(120deg, #1d130b, #4a3324, #6b4a33, #a97c54, #4a3324, #1d130b)",
-              backgroundSize: "300% 300%",
-              animation: "contact-pan 18s ease-in-out infinite",
-            }}
-          />
-          {/* sutil oscurecido para legibilidad */}
-          <div
-            aria-hidden
-            className="absolute inset-0 -z-10 bg-espresso/20"
-          />
+          {/* Fondo animado: Beams (Three.js), con fallback a gradiente. */}
+          <ContactBeamsBg />
 
           <p className="font-mono text-xs uppercase tracking-[0.22em] text-paper/70">
             Contacto
