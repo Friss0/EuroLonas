@@ -43,7 +43,7 @@ y visual para el cliente final.
 ## Propuesta de valor
 
 - **Representación oficial Sauleda** en Argentina: respaldo, originalidad y trazabilidad de las
-  líneas (Solar Pro, Solar Pro Tech, Nautic, Technical, Office, Textile).
+  líneas (Solar Pro, Solar Pro Tech, Nautic, Textile).
 - **Catálogo curado y honesto:** pocos productos, bien explicados, con su color/medida real y su
   precio por unidad de venta correcta (metro, rollo, juego).
 - **Compra directa:** carrito y checkout, sin pasar por cotizaciones eternas. Pensado para que el

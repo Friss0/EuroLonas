@@ -38,8 +38,8 @@ export default async function Home() {
                 Somos el distribuidor oficial de Sauleda en Argentina.
               </p>
               <p className="mt-5 max-w-[58ch] text-white/90">
-                Trabajamos las líneas Solar Pro, Nautic, Technical, Office y
-                Textile. Lonas pensadas para durar a la intemperie, con respaldo y
+                Trabajamos las líneas Solar Pro, Nautic y Textile. Lonas
+                pensadas para durar a la intemperie, con respaldo y
                 trazabilidad de origen.
               </p>
             </Reveal>
