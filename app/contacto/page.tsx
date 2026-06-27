@@ -26,9 +26,8 @@ export default function ContactoPage() {
           <h1 className="font-display text-[clamp(2rem,1.4rem+2.4vw,3.4rem)] leading-[1.05]">
             Hablemos de tu proyecto
           </h1>
-          <p className="max-w-[42ch] text-paper/85">
-            Contanos qué necesitás —metros, color, una reparación— y te
-            respondemos a la brevedad.
+          <p className="hidden max-w-[42ch] text-paper/85 md:block">
+            Contanos qué necesitás y te responderemos a la brevedad.
           </p>
 
           <ul className="mt-2 space-y-3 text-sm">
