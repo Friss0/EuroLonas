@@ -29,6 +29,16 @@ export const metadata: Metadata = {
   title: "Eurolonas — Lonas técnicas Sauleda en Argentina",
   description:
     "Distribuidor oficial Sauleda en Argentina. Lonas acrílicas, Soltis y Cristal PVC, e insumos para toldos. Telas por metro y por rollo.",
+  // Favicon optimizado: 32px para la pestaña (descarga mínima), 500px para
+  // alta densidad y 180px para apple-touch (iOS).
+  icons: {
+    icon: [
+      { url: "/eurolonas-favicon-32.png", type: "image/png", sizes: "32x32" },
+      { url: "/eurolonas-favicon.png", type: "image/png", sizes: "500x500" },
+    ],
+    shortcut: "/eurolonas-favicon-32.png",
+    apple: { url: "/eurolonas-favicon-180.png", sizes: "180x180" },
+  },
 };
 
 export default function RootLayout({
