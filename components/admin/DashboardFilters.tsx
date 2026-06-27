@@ -35,7 +35,7 @@ export function DashboardFilters({
             key={p.value}
             type="button"
             onClick={() => setParam("periodo", p.value)}
-            className={`flex h-9 items-center rounded-sm border px-3.5 text-sm transition ${
+            className={`flex h-9 items-center rounded-lg border px-3.5 text-sm transition ${
               periodo === p.value
                 ? "border-camel bg-camel text-paper"
                 : "border-line text-bark hover:border-camel-soft"
@@ -51,7 +51,7 @@ export function DashboardFilters({
           value={producto}
           onChange={(e) => setParam("producto", e.target.value)}
           aria-label="Filtrar por producto"
-          className="h-9 cursor-pointer appearance-none rounded-sm border border-line bg-paper pl-3 pr-8 text-sm text-bark outline-none transition-colors hover:border-camel-soft focus:border-camel"
+          className="h-9 cursor-pointer appearance-none rounded-lg border border-line bg-paper pl-3 pr-8 text-sm text-bark outline-none transition-colors hover:border-camel-soft focus:border-camel"
         >
           <option value="">Todos los productos</option>
           {productos.map((p) => (

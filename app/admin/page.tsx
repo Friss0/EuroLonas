@@ -63,7 +63,7 @@ export default async function AdminDashboard({
         </h1>
         <Link
           href="/admin/productos/nuevo"
-          className="flex h-11 items-center rounded-sm bg-espresso px-5 text-sm font-medium text-cream transition-colors hover:bg-bark"
+          className="flex h-11 items-center rounded-lg bg-espresso px-5 text-sm font-medium text-cream transition-colors hover:bg-bark"
         >
           + Nuevo producto
         </Link>
@@ -74,7 +74,7 @@ export default async function AdminDashboard({
         {cards.map((c) => (
           <div
             key={c.label}
-            className="rounded-sm border border-line bg-paper p-5"
+            className="rounded-lg border border-line bg-paper p-5"
           >
             <p className="font-mono text-xs uppercase tracking-[0.16em] text-taupe">
               {c.label}
@@ -97,7 +97,7 @@ export default async function AdminDashboard({
         </div>
 
         <div className="mt-5 grid grid-cols-3 gap-4 sm:max-w-xl">
-          <div className="rounded-sm border border-line bg-sand/40 p-4">
+          <div className="rounded-lg border border-line bg-sand/40 p-4">
             <p className="font-mono text-xs uppercase tracking-[0.16em] text-taupe">
               Pedidos
             </p>
@@ -105,7 +105,7 @@ export default async function AdminDashboard({
               {cantidad}
             </p>
           </div>
-          <div className="rounded-sm border border-line bg-sand/40 p-4">
+          <div className="rounded-lg border border-line bg-sand/40 p-4">
             <p className="font-mono text-xs uppercase tracking-[0.16em] text-taupe">
               Total
             </p>
@@ -113,7 +113,7 @@ export default async function AdminDashboard({
               {formatPrecio(ingresos)}
             </p>
           </div>
-          <div className="rounded-sm border border-line bg-sand/40 p-4">
+          <div className="rounded-lg border border-line bg-sand/40 p-4">
             <p className="font-mono text-xs uppercase tracking-[0.16em] text-taupe">
               Cobrado
             </p>
@@ -132,7 +132,7 @@ export default async function AdminDashboard({
             {filtrados.map((p) => (
               <li
                 key={p.id}
-                className="rounded-sm border border-line bg-paper p-5"
+                className="rounded-lg border border-line bg-paper p-5"
               >
                 <div className="flex flex-wrap items-start justify-between gap-3 border-b border-line pb-3">
                   <div>

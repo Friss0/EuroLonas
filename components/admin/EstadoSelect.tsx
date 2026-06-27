@@ -54,7 +54,7 @@ export function EstadoSelect({
         onChange={onChange}
         disabled={pending}
         aria-label="Estado del pedido"
-        className="h-9 cursor-pointer appearance-none rounded-sm border border-line bg-paper pl-7 pr-8 text-xs text-bark capitalize outline-none transition-colors hover:border-camel-soft focus:border-camel disabled:opacity-50"
+        className="h-9 cursor-pointer appearance-none rounded-lg border border-line bg-paper pl-7 pr-8 text-xs text-bark capitalize outline-none transition-colors hover:border-camel-soft focus:border-camel disabled:opacity-50"
       >
         {ESTADOS.map((s) => (
           <option key={s} value={s}>

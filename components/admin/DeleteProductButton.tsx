@@ -36,7 +36,7 @@ export function DeleteProductButton({
         type="button"
         onClick={onDelete}
         disabled={pending}
-        className="flex h-9 items-center gap-1.5 rounded-sm bg-[#b5483d] px-3 text-xs font-medium text-cream transition-colors hover:bg-[#9d3e35] disabled:opacity-50"
+        className="flex h-9 items-center gap-1.5 rounded-lg bg-[#b5483d] px-3 text-xs font-medium text-cream transition-colors hover:bg-[#9d3e35] disabled:opacity-50"
       >
         <svg
           width="14"

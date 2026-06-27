@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { guardarProducto } from "@/app/admin/actions";
 import { useToast } from "@/components/ui/Toast";
+import { Toggle } from "@/components/ui/Toggle";
 import type {
   OpcionRubro,
   OpcionCategoria,
@@ -32,9 +33,9 @@ type VarianteRow = {
 };
 
 const input =
-  "h-11 w-full rounded-sm border border-line bg-paper px-3 text-sm text-bark outline-none transition-colors focus:border-camel";
+  "h-11 w-full rounded-lg border border-line bg-paper px-3 text-sm text-bark outline-none transition-colors focus:border-camel";
 const cellInput =
-  "h-9 w-full rounded-sm border border-line bg-paper px-2 text-xs text-bark outline-none focus:border-camel";
+  "h-9 w-full rounded-lg border border-line bg-paper px-2 text-xs text-bark outline-none focus:border-camel";
 const label = "font-mono text-xs uppercase tracking-[0.16em] text-cocoa";
 
 function uid() {
@@ -262,36 +263,22 @@ export function ProductForm({
           {producto ? "Editar producto" : "Nuevo producto"}
         </h1>
         <div className="flex flex-col items-end gap-1.5">
-          <div className="flex items-center gap-3">
-            <label className="flex items-center gap-2 text-sm text-bark">
-              <input
-                name="activo"
-                type="checkbox"
-                checked={activo}
-                onChange={(e) => setActivo(e.target.checked)}
-                className="h-4 w-4 accent-[#a97c54]"
-              />
-              Activo
-            </label>
-            <label className="flex items-center gap-2 text-sm text-bark">
-              <input
-                name="destacado"
-                type="checkbox"
-                checked={destacado}
-                onChange={(e) => {
-                  if (e.target.checked && destacadosCount >= 4) {
-                    setDestacadoError(
-                      "Ya hay 4 productos destacados. Quitá uno antes.",
-                    );
-                    return;
-                  }
-                  setDestacadoError(null);
-                  setDestacado(e.target.checked);
-                }}
-                className="h-4 w-4 accent-[#a97c54]"
-              />
-              Destacado
-            </label>
+          <div className="flex items-center gap-5">
+            <Toggle checked={activo} onChange={setActivo} label="Activo" />
+            <Toggle
+              checked={destacado}
+              label="Destacado"
+              onChange={(v) => {
+                if (v && destacadosCount >= 4) {
+                  setDestacadoError(
+                    "Ya hay 4 productos destacados. Quitá uno antes.",
+                  );
+                  return;
+                }
+                setDestacadoError(null);
+                setDestacado(v);
+              }}
+            />
           </div>
           {destacadoError && (
             <p className="max-w-[240px] text-right font-mono text-[11px] text-[#b5483d]">
@@ -410,7 +397,7 @@ export function ProductForm({
                   key={a.id}
                   type="button"
                   onClick={() => toggleApp(a.id)}
-                  className={`flex h-10 items-center rounded-sm border px-4 text-sm transition ${
+                  className={`flex h-10 items-center rounded-lg border px-4 text-sm transition ${
                     on
                       ? "border-camel bg-camel text-paper"
                       : "border-line text-bark hover:border-camel-soft"
@@ -475,7 +462,7 @@ export function ProductForm({
           <button
             type="button"
             onClick={addVariante}
-            className="flex h-9 items-center rounded-sm border border-line px-3 text-xs font-medium text-bark transition-colors hover:border-camel hover:text-camel"
+            className="flex h-9 items-center rounded-lg border border-line px-3 text-xs font-medium text-bark transition-colors hover:border-camel hover:text-camel"
           >
             + Agregar variante
           </button>
@@ -546,7 +533,7 @@ export function ProductForm({
                           onChange={(e) =>
                             setVar(v._key, { swatch_hex: e.target.value })
                           }
-                          className="h-9 w-12 cursor-pointer rounded-sm border border-line bg-paper"
+                          className="h-9 w-12 cursor-pointer rounded-lg border border-line bg-paper"
                           aria-label="Color"
                         />
                       ) : (
@@ -560,7 +547,7 @@ export function ProductForm({
                           <img
                             src={v.swatch_url}
                             alt=""
-                            className="h-9 w-9 rounded-sm object-cover ring-1 ring-line"
+                            className="h-9 w-9 rounded-lg object-cover ring-1 ring-line"
                           />
                           <button
                             type="button"
@@ -572,7 +559,7 @@ export function ProductForm({
                           </button>
                         </span>
                       ) : (
-                        <label className="flex h-9 w-16 cursor-pointer items-center justify-center rounded-sm border border-dashed border-line text-[10px] text-taupe transition-colors hover:border-camel hover:text-camel">
+                        <label className="flex h-9 w-16 cursor-pointer items-center justify-center rounded-lg border border-dashed border-line text-[10px] text-taupe transition-colors hover:border-camel hover:text-camel">
                           + foto
                           <input
                             type="file"
@@ -617,16 +604,13 @@ export function ProductForm({
                         className={`${cellInput} w-[70px]`}
                       />
                     </td>
-                    <td className="py-2 pr-2 text-center">
-                      <input
-                        name={`v-${v._key}-activo`}
-                        type="checkbox"
-                        checked={v.activo}
-                        onChange={(e) =>
-                          setVar(v._key, { activo: e.target.checked })
-                        }
-                        className="h-4 w-4 accent-[#a97c54]"
-                      />
+                    <td className="py-2 pr-2">
+                      <div className="flex justify-center">
+                        <Toggle
+                          checked={v.activo}
+                          onChange={(val) => setVar(v._key, { activo: val })}
+                        />
+                      </div>
                     </td>
                     <td className="py-2 text-right">
                       <button
@@ -657,7 +641,7 @@ export function ProductForm({
           <button
             type="button"
             onClick={() => setImagenMiniatura("")}
-            className={`relative h-24 w-24 overflow-hidden rounded-sm ring-1 transition ${
+            className={`relative h-24 w-24 overflow-hidden rounded-lg ring-1 transition ${
               imagenMiniatura === ""
                 ? "ring-2 ring-camel"
                 : "ring-line hover:ring-camel-soft"
@@ -686,7 +670,7 @@ export function ProductForm({
               type="button"
               onClick={() => setImagenMiniatura(o.url)}
               title={o.label}
-              className={`relative h-24 w-24 overflow-hidden rounded-sm ring-1 transition ${
+              className={`relative h-24 w-24 overflow-hidden rounded-lg ring-1 transition ${
                 imagenMiniatura === o.url
                   ? "ring-2 ring-camel"
                   : "ring-line hover:ring-camel-soft"
@@ -717,14 +701,14 @@ export function ProductForm({
         <button
           type="submit"
           disabled={saving || uploading}
-          className="flex h-12 items-center justify-center rounded-sm bg-espresso px-8 text-sm font-medium text-cream transition-colors hover:bg-bark disabled:opacity-50"
+          className="flex h-12 items-center justify-center rounded-lg bg-espresso px-8 text-sm font-medium text-cream transition-colors hover:bg-bark disabled:opacity-50"
         >
           {saving ? "Guardando…" : "Guardar producto"}
         </button>
         <button
           type="button"
           onClick={() => router.push("/admin/productos")}
-          className="flex h-12 items-center rounded-sm border border-line px-6 text-sm text-bark transition-colors hover:border-camel-soft"
+          className="flex h-12 items-center rounded-lg border border-line px-6 text-sm text-bark transition-colors hover:border-camel-soft"
         >
           Cancelar
         </button>
@@ -753,7 +737,7 @@ function ImageZone({
         {urls.map((u) => (
           <div
             key={u}
-            className="relative h-20 w-20 overflow-hidden rounded-sm ring-1 ring-line"
+            className="relative h-20 w-20 overflow-hidden rounded-lg ring-1 ring-line"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={u} alt="" className="h-full w-full object-cover" />
@@ -767,7 +751,7 @@ function ImageZone({
             </button>
           </div>
         ))}
-        <label className="flex h-20 w-20 cursor-pointer flex-col items-center justify-center rounded-sm border border-dashed border-line text-center text-[10px] text-taupe transition-colors hover:border-camel hover:text-camel">
+        <label className="flex h-20 w-20 cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed border-line text-center text-[10px] text-taupe transition-colors hover:border-camel hover:text-camel">
           {uploading ? "Subiendo…" : "+ Subir"}
           <input
             type="file"

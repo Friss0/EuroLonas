@@ -31,7 +31,7 @@ export default async function AdminLayout({
             <Link
               key={it.href}
               href={it.href}
-              className="flex h-10 items-center rounded-sm px-3 text-sm text-bark transition-colors hover:bg-sand hover:text-camel"
+              className="flex h-10 items-center rounded-lg px-3 text-sm text-bark transition-colors hover:bg-sand hover:text-camel"
             >
               {it.label}
             </Link>

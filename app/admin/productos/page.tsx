@@ -14,7 +14,7 @@ export default async function AdminProductos() {
         </h1>
         <Link
           href="/admin/productos/nuevo"
-          className="flex h-11 items-center rounded-sm bg-espresso px-5 text-sm font-medium text-cream transition-colors hover:bg-bark"
+          className="flex h-11 items-center rounded-lg bg-espresso px-5 text-sm font-medium text-cream transition-colors hover:bg-bark"
         >
           + Nuevo producto
         </Link>
@@ -39,12 +39,12 @@ export default async function AdminProductos() {
                   {p.nombre}
                 </Link>
                 {!p.activo && (
-                  <span className="rounded-sm bg-sand px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wide text-taupe">
+                  <span className="rounded-lg bg-sand px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wide text-taupe">
                     inactivo
                   </span>
                 )}
                 {p.destacado && (
-                  <span className="rounded-sm bg-camel/15 px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wide text-camel">
+                  <span className="rounded-lg bg-camel/15 px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wide text-camel">
                     destacado
                   </span>
                 )}
