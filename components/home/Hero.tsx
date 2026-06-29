@@ -9,6 +9,8 @@ export function Hero() {
         muted
         loop
         playsInline
+        preload="auto"
+        poster="/videos/hero-poster.jpg"
         aria-hidden
       >
         <source src="/videos/Sauleda.mp4" type="video/mp4" />
